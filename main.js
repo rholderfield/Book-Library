@@ -89,14 +89,12 @@ function createBook(title, pages, author, hasRead) {
 console.log(myLibrary);
 
 function create(book) {
-
-  const {title, pages, author, published, hasRead} = book;
+  const { title, pages, author, published, hasRead } = book;
 
   const cell = document.createElement("div");
   cell.classList.add("mdl-cell");
   cell.classList.add("mdl-cell--3-col");
   cell.style.width = "max-content";
-  
 
   const card = document.createElement("div");
   card.classList.add("mdl-card");
@@ -223,17 +221,19 @@ function create(book) {
   border.appendChild(deleteButton);
 }
 
-function buildUI (){
-myLibrary.forEach(function(element) {
-  return create(element);
-});
+function buildUI() {
+  myLibrary.forEach(function(element) {
+    return create(element);
+  });
 }
 
-function deleteUI(){
+function deleteUI() {
   const container = document.querySelector(".mdl-grid");
-  document.querySelectorAll("body > div > div > main > div > div").forEach(function(element){
-    container.removeChild(element);
-  });
+  document
+    .querySelectorAll("body > div > div > main > div > div")
+    .forEach(function(element) {
+      container.removeChild(element);
+    });
 }
 
 buildUI();
