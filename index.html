@@ -24,10 +24,78 @@
         <div class="mdl-layout__header-row ">
           <div class="add-new">
             <button
+              id="show-modal-example"
               class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
             >
               <i class="material-icons">add</i>
             </button>
+
+            <dialog class="mdl-dialog" id="modal-example">
+              <div class="mdl-dialog__content">
+                <form action="#">
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <input
+                      class="mdl-textfield__input"
+                      type="text"
+                      id="title"
+                    />
+                    <label class="mdl-textfield__label" for="title"
+                      >Title</label
+                    >
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <input
+                      class="mdl-textfield__input"
+                      type="text"
+                      pattern="-?[0-9]*(\.[0-9]+)?"
+                      id="pages"
+                    />
+                    <label class="mdl-textfield__label" for="pages"
+                      >Pages</label
+                    >
+                    <span class="mdl-textfield__error"
+                      >Input is not a number!</span
+                    >
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <input
+                      class="mdl-textfield__input"
+                      type="text"
+                      id="author"
+                    />
+                    <label class="mdl-textfield__label" for="author"
+                      >Author</label
+                    >
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <input
+                      class="mdl-textfield__input"
+                      type="text"
+                      id="published"
+                    />
+                    <label class="mdl-textfield__label" for="published"
+                      >Published</label
+                    >
+                  </div>
+                  <label
+                    class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+                    for="readyet"
+                  >
+                    <input
+                      type="checkbox"
+                      id="readyet"
+                      class="mdl-checkbox__input"
+                      unchecked
+                    />
+                    <span class="mdl-checkbox__label">Read Yet?</span>
+                  </label>
+                </form>
+              </div>
+              <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+                <button type="button" class="mdl-button">Close</button>
+                <button type="button" class="mdl-button">Add</button>
+              </div>
+            </dialog>
 
             <span class="mdl-layout__title">The Library</span>
             <div class="mdl-layout-spacer"></div>
