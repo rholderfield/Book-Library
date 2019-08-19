@@ -32,8 +32,11 @@
 
             <dialog class="mdl-dialog" id="modal-example">
               <div class="mdl-dialog__content">
-                <form action="#">
-                  <div class="mdl-textfield mdl-js-textfield">
+                <form id="myform" action="#">
+                  <div
+                    class="mdl-textfield mdl-js-textfield"
+                    id="title-container"
+                  >
                     <input
                       class="mdl-textfield__input"
                       type="text"
@@ -43,7 +46,10 @@
                       >Title</label
                     >
                   </div>
-                  <div class="mdl-textfield mdl-js-textfield">
+                  <div
+                    class="mdl-textfield mdl-js-textfield"
+                    id="pages-container"
+                  >
                     <input
                       class="mdl-textfield__input"
                       type="text"
@@ -57,7 +63,10 @@
                       >Input is not a number!</span
                     >
                   </div>
-                  <div class="mdl-textfield mdl-js-textfield">
+                  <div
+                    class="mdl-textfield mdl-js-textfield"
+                    id="author-container"
+                  >
                     <input
                       class="mdl-textfield__input"
                       type="text"
@@ -70,33 +79,32 @@
                   <div class="mdl-textfield mdl-js-textfield">
                     <input
                       class="mdl-textfield__input"
-                      type="text"
+                      type="date"
                       id="published"
                     />
-                    <label class="mdl-textfield__label" for="published"
-                      >Published</label
-                    >
+                    Published
                   </div>
-                  <label
-                    class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-                    for="readyet"
-                  >
+                  <div class="mdl-textfield mdl-js-textfield">
                     <input
-                      type="checkbox"
-                      id="readyet"
-                      class="mdl-checkbox__input"
-                      unchecked
+                      class="mdl-textfield__input"
+                      type="date"
+                      id="lastread"
                     />
-                    <span class="mdl-checkbox__label">Read Yet?</span>
-                  </label>
+                    Last Read
+                  </div>
+                  <div
+                    class="mdl-dialog__actions mdl-dialog__actions--full-width"
+                  >
+                    <button type="submit" id="add" class="mdl-button">
+                      Add
+                    </button>
+                    <button type="button" id="close" class="mdl-button">
+                      Close
+                    </button>
+                  </div>
                 </form>
               </div>
-              <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
-                <button type="button" class="mdl-button">Close</button>
-                <button type="button" class="mdl-button">Add</button>
-              </div>
             </dialog>
-
             <span class="mdl-layout__title">The Library</span>
             <div class="mdl-layout-spacer"></div>
           </div>

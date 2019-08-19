@@ -4,37 +4,37 @@ let myLibrary = [
     pages: 310,
     author: "J. R. R. Tolkien",
     published: "21 September 1937",
-    hasRead: false
+    lastRead: "2012"
   },
   {
     title: "The Fellowship of the Ring",
     pages: 423,
     author: "J. R. R. Tolkien",
     published: "29 July 1954",
-    hasRead: false
+    lastRead: "2012"
   },
   {
     title: "The Two Towers",
     pages: 352,
     author: "J. R. R. Tolkien",
     published: "11 November 1954",
-    hasRead: false
+    lastRead: "2012"
   },
   {
     title: "The Return of the King",
     pages: 416,
     author: "J. R. R. Tolkien",
     published: "20 October 1955",
-    hasRead: false
+    lastRead: "2012"
   }
 ];
 
-function Book(title, pages, author, published, hasRead = false) {
+function Book(title, pages, author, published, lastRead) {
   this.title = title;
   this.pages = pages;
   this.author = author;
   this.published = published;
-  this.hasRead = hasRead;
+  this.lastRead = lastRead;
 }
 
 Book.prototype.getTitle = function getTitle() {
@@ -70,26 +70,26 @@ Book.prototype.setPublished = function setPublished(value) {
 };
 
 Book.prototype.getHasRead = function getHasRead() {
-  return this.hasRead;
+  return this.lastRead;
 };
 
 Book.prototype.setHasRead = function setHasRead(value) {
-  this.hasRead = value;
+  this.lastRead = value;
 };
 
 function addBookToLibrary(newBook) {
   myLibrary.push(newBook);
 }
 
-function createBook(title, pages, author, hasRead) {
-  let newBook = new Book(title, pages, author, hasRead);
+function createBook(title, pages, author, published, lastRead) {
+  let newBook = new Book(title, pages, author, published, lastRead);
   return newBook;
 }
 
 console.log(myLibrary);
 
 function create(book) {
-  const { title, pages, author, published, hasRead } = book;
+  const { title, pages, author, published, lastRead } = book;
 
   const cell = document.createElement("div");
   cell.classList.add("mdl-cell");
@@ -158,11 +158,11 @@ function create(book) {
   readLine.classList.add("read-line");
 
   const readText = document.createElement("span");
-  readText.textContent = "Read Yet? ";
+  readText.textContent = "Last Read: ";
 
   const readYet = document.createElement("span");
-  readYet.classList.add("read-yet");
-  readYet.textContent = `${hasRead}`;
+  readYet.classList.add("last-read");
+  readYet.textContent = `${lastRead}`;
 
   const lineBreakFour = document.createElement("br");
   //
@@ -171,13 +171,6 @@ function create(book) {
   const border = document.createElement("div");
   border.classList.add("mdl-card__actions");
   border.classList.add("mdl-card--border");
-
-  const editButton = document.createElement("a");
-  editButton.classList.add("mdl-button");
-  editButton.classList.add("mdl-button--colored");
-  editButton.classList.add("mdl-js-button");
-  editButton.classList.add("mdl-js-ripple-effect");
-  editButton.textContent = "Edit";
 
   const deleteButton = document.createElement("a");
   deleteButton.classList.add("mdl-button");
@@ -217,11 +210,10 @@ function create(book) {
   readLine.appendChild(lineBreakFour);
 
   card.appendChild(border);
-  border.appendChild(editButton);
   border.appendChild(deleteButton);
 }
 
-function buildUI() {
+function render() {
   myLibrary.forEach(function(element) {
     return create(element);
   });
@@ -236,10 +228,21 @@ function deleteUI() {
     });
 }
 
+function clearForm() {
+  document.querySelector("#myform").reset();
+  let title = document.querySelector("#title-container");
+  let pages = document.querySelector("#pages-container");
+  let author = document.querySelector("#author-container");
+  title.classList.remove("is-dirty");
+  pages.classList.remove("is-dirty");
+  author.classList.remove("is-dirty");
+}
+
 (function() {
   "use strict";
   var dialog = document.querySelector("#modal-example");
-  var closeButton = dialog.querySelector("button");
+  var closeButton = dialog.querySelector("#close");
+  var addButton = dialog.querySelector("#add");
   var showButton = document.querySelector("#show-modal-example");
   if (!dialog.showModal) {
     dialogPolyfill.registerDialog(dialog);
@@ -250,8 +253,20 @@ function deleteUI() {
   var showClickHandler = function(event) {
     dialog.showModal();
   };
+  var addClickHandler = function() {
+    let title = document.querySelector("#title").value;
+    let pages = document.querySelector("#pages").value;
+    let author = document.querySelector("#author").value;
+    let published = document.querySelector("#published").value;
+    let lastRead = document.querySelector("#lastread").value;
+    addBookToLibrary(createBook(title, pages, author, published, lastRead));
+    deleteUI();
+    clearForm();
+    render();
+  };
   showButton.addEventListener("click", showClickHandler);
   closeButton.addEventListener("click", closeClickHandler);
+  addButton.addEventListener("click", addClickHandler);
 })();
 
-buildUI();
+render();
