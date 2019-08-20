@@ -1,33 +1,4 @@
-let myLibrary = [
-  {
-    title: "The Hobbit",
-    pages: 310,
-    author: "J. R. R. Tolkien",
-    published: "21 September 1937",
-    lastRead: "2012"
-  },
-  {
-    title: "The Fellowship of the Ring",
-    pages: 423,
-    author: "J. R. R. Tolkien",
-    published: "29 July 1954",
-    lastRead: "2012"
-  },
-  {
-    title: "The Two Towers",
-    pages: 352,
-    author: "J. R. R. Tolkien",
-    published: "11 November 1954",
-    lastRead: "2012"
-  },
-  {
-    title: "The Return of the King",
-    pages: 416,
-    author: "J. R. R. Tolkien",
-    published: "20 October 1955",
-    lastRead: "2012"
-  }
-];
+let myLibrary = [];
 
 function Book(title, pages, author, published, lastRead) {
   this.title = title;
@@ -41,42 +12,6 @@ Book.prototype.getTitle = function getTitle() {
   return this.title;
 };
 
-Book.prototype.setTitle = function setTitle(value) {
-  this.title = value;
-};
-
-Book.prototype.getPages = function getPages() {
-  return this.pages;
-};
-
-Book.prototype.setPages = function setPages(value) {
-  this.pages = value;
-};
-
-Book.prototype.getAuthor = function getAuthor() {
-  return this.author;
-};
-
-Book.prototype.setAuthor = function setAuthor(value) {
-  this.author = value;
-};
-
-Book.prototype.getPublished = function getPublished() {
-  return this.published;
-};
-
-Book.prototype.setPublished = function setPublished(value) {
-  this.published = value;
-};
-
-Book.prototype.getHasRead = function getHasRead() {
-  return this.lastRead;
-};
-
-Book.prototype.setHasRead = function setHasRead(value) {
-  this.lastRead = value;
-};
-
 function addBookToLibrary(newBook) {
   myLibrary.push(newBook);
 }
@@ -85,8 +20,6 @@ function createBook(title, pages, author, published, lastRead) {
   let newBook = new Book(title, pages, author, published, lastRead);
   return newBook;
 }
-
-console.log(myLibrary);
 
 function create(book) {
   const { title, pages, author, published, lastRead } = book;
@@ -177,6 +110,8 @@ function create(book) {
   deleteButton.classList.add("mdl-button--colored");
   deleteButton.classList.add("mdl-js-button");
   deleteButton.classList.add("mdl-js-ripple-effect");
+  deleteButton.classList.add("delete-button");
+  deleteButton.dataset.key = `${title}`;
   deleteButton.textContent = "Delete";
 
   const container = document.querySelector(".mdl-grid");
@@ -215,7 +150,17 @@ function create(book) {
 
 function render() {
   myLibrary.forEach(function(element) {
-    return create(element);
+    create(element);
+  });
+  return addEvents();
+}
+
+function addEvents() {
+  let buttons = document.querySelectorAll(".delete-button");
+  buttons.forEach(buttons => {
+    buttons.addEventListener("click", e => {
+      console.table(e.target);
+    });
   });
 }
 
@@ -240,20 +185,20 @@ function clearForm() {
 
 (function() {
   "use strict";
-  var dialog = document.querySelector("#modal-example");
-  var closeButton = dialog.querySelector("#close");
-  var addButton = dialog.querySelector("#add");
-  var showButton = document.querySelector("#show-modal-example");
+  let dialog = document.querySelector("#modal-example");
+  let closeButton = dialog.querySelector("#close");
+  let addButton = dialog.querySelector("#add");
+  let showButton = document.querySelector("#show-modal-example");
   if (!dialog.showModal) {
     dialogPolyfill.registerDialog(dialog);
   }
-  var closeClickHandler = function(event) {
+  let closeClickHandler = function(event) {
     dialog.close();
   };
-  var showClickHandler = function(event) {
+  let showClickHandler = function(event) {
     dialog.showModal();
   };
-  var addClickHandler = function() {
+  let addClickHandler = function() {
     let title = document.querySelector("#title").value;
     let pages = document.querySelector("#pages").value;
     let author = document.querySelector("#author").value;
@@ -268,5 +213,36 @@ function clearForm() {
   closeButton.addEventListener("click", closeClickHandler);
   addButton.addEventListener("click", addClickHandler);
 })();
+
+addBookToLibrary(
+  createBook("TheHobbit", 310, "J. R. R. Tolkien", "1937-09-21", "2012-01-08")
+);
+addBookToLibrary(
+  createBook(
+    "The Fellowship of the Ring",
+    423,
+    "J. R. R. Tolkien",
+    "1954-07-29",
+    "2012-04-30"
+  )
+);
+addBookToLibrary(
+  createBook(
+    "The Two Towers",
+    352,
+    "J. R. R. Tolkien",
+    "1954-07-29",
+    "2012-07-10"
+  )
+);
+addBookToLibrary(
+  createBook(
+    "The Return of the King",
+    416,
+    "J. R. R. Tolkien",
+    "1954-07-29",
+    "2012-10-03"
+  )
+);
 
 render();
