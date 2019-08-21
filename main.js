@@ -1,28 +1,26 @@
 let myLibrary = [];
 
-function Book(title, pages, author, published, lastRead) {
+function Book(title, pages, author, published, lastRead, weakKey) {
   this.title = title;
   this.pages = pages;
   this.author = author;
   this.published = published;
   this.lastRead = lastRead;
+  this.weakKey = weakKey;
 }
-
-Book.prototype.getTitle = function getTitle() {
-  return this.title;
-};
 
 function addBookToLibrary(newBook) {
   myLibrary.push(newBook);
 }
 
 function createBook(title, pages, author, published, lastRead) {
-  let newBook = new Book(title, pages, author, published, lastRead);
+  let weakKey = pages + Date.now();
+  let newBook = new Book(title, pages, author, published, lastRead, weakKey);
   return newBook;
 }
 
 function create(book) {
-  const { title, pages, author, published, lastRead } = book;
+  const { title, pages, author, published, lastRead, weakKey } = book;
 
   const cell = document.createElement("div");
   cell.classList.add("mdl-cell");
@@ -111,7 +109,8 @@ function create(book) {
   deleteButton.classList.add("mdl-js-button");
   deleteButton.classList.add("mdl-js-ripple-effect");
   deleteButton.classList.add("delete-button");
-  deleteButton.dataset.key = `${title}`;
+  deleteButton.name = "delete-button";
+  deleteButton.dataset.key = `${weakKey}`;
   deleteButton.textContent = "Delete";
 
   const container = document.querySelector(".mdl-grid");
@@ -152,16 +151,26 @@ function render() {
   myLibrary.forEach(function(element) {
     create(element);
   });
-  return addEvents();
+  return addDeleteEvents();
 }
 
-function addEvents() {
-  let buttons = document.querySelectorAll(".delete-button");
-  buttons.forEach(buttons => {
-    buttons.addEventListener("click", e => {
-      console.table(e.target);
+function addDeleteEvents() {
+  let buttons = document.getElementsByName("delete-button");
+  buttons.forEach(button => {
+    button.addEventListener("click", e => {
+      deleteBookRecord(e.currentTarget.dataset.key);
+      deleteUI();
+      render();
     });
   });
+}
+
+function deleteBookRecord(weakKey) {
+  const valueToRemove = weakKey;
+  const removedArray = myLibrary.filter(
+    book => !valueToRemove.includes(book.weakKey)
+  );
+  myLibrary = removedArray;
 }
 
 function deleteUI() {
@@ -215,7 +224,7 @@ function clearForm() {
 })();
 
 addBookToLibrary(
-  createBook("TheHobbit", 310, "J. R. R. Tolkien", "1937-09-21", "2012-01-08")
+  createBook("The Hobbit", 310, "J. R. R. Tolkien", "1937-09-21", "2012-01-08")
 );
 addBookToLibrary(
   createBook(
